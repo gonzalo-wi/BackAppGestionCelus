@@ -19,6 +19,11 @@ public class SolicitudController {
         return solicitudService.getAll();
     }
 
+    @GetMapping("/usuario/{usuario}")
+    public List<Solicitud> getByUsuario(@PathVariable String usuario) {
+        return solicitudService.getByUsuario(usuario);
+    }
+
     @PostMapping
     public Solicitud crearSolicitud(@RequestBody Solicitud solicitud) {
         return solicitudService.crearSolicitud(solicitud);

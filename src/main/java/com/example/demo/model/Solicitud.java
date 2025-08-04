@@ -40,5 +40,9 @@ public class Solicitud {
         this.estado = nuevoEstado;
     }
 
+    public String getUsuario() {
+        return usuario;
+    }
+
  
 }

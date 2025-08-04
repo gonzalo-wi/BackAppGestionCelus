@@ -25,4 +25,10 @@ public class SolicitudService {
         solicitud.cambiarEstado(nuevoEstado);
         return solicitudRepository.save(solicitud);
     }
+
+    public List<Solicitud> getByUsuario(String usuario) {
+        return solicitudRepository.findAll().stream()
+            .filter(s -> usuario.equals(s.getUsuario()))
+            .toList();
+    }
 }
