@@ -21,8 +21,32 @@ public class CelularService {
         return celularRepository.save(celular);
     }
 
+    public Celular update(int numeroSerie, Celular celularActualizado) {
+        Optional<Celular> celularOpt = buscarPorNumeroSerie(numeroSerie);
+        if (celularOpt.isPresent()) {
+            Celular celularExistente = celularOpt.get();
+            
+            celularExistente.setMarca(celularActualizado.getMarca());
+            celularExistente.setModelo(celularActualizado.getModelo());
+            celularExistente.setEstado(celularActualizado.getEstado());
+            
+            // Actualizar código interno si se proporciona
+            if (celularActualizado.getCodigoInterno() != null && 
+                !celularActualizado.getCodigoInterno().trim().isEmpty()) {
+                celularExistente.setCodigoInterno(celularActualizado.getCodigoInterno());
+            }
+            
+            if (celularActualizado.getUsuario() != null) {
+                celularExistente.asignarUsuario(celularActualizado.getUsuario());
+            }
+            return celularRepository.save(celularExistente);
+        } else {
+            throw new RuntimeException("Celular con número de serie " + numeroSerie + " no encontrado");
+        }
+    }
+
     public Optional<Celular> buscarPorNumeroSerie(int numeroSerie) {
-        return celularRepository.findById(numeroSerie);
+        return celularRepository.findById((long) numeroSerie);
     }
 
     public boolean cambiarEstado(int numeroSerie, EstadoCelular nuevoEstado) {
@@ -47,5 +71,16 @@ public class CelularService {
             sePudoAsignar = true;
         }
         return sePudoAsignar;
+    }
+
+    public Celular actualizarCodigoInterno(int numeroSerie, String nuevoCodigoInterno) {
+        Optional<Celular> celularOpt = buscarPorNumeroSerie(numeroSerie);
+        if (celularOpt.isPresent()) {
+            Celular celular = celularOpt.get();
+            celular.setCodigoInterno(nuevoCodigoInterno);
+            return celularRepository.save(celular);
+        } else {
+            throw new RuntimeException("Celular con número de serie " + numeroSerie + " no encontrado");
+        }
     }
 }

@@ -20,17 +20,21 @@ public class Movimiento {
 
     private String descripcion;
 
+    @Enumerated(EnumType.STRING)
+    private TipoMovimiento tipo;
+
     public Movimiento() {}
 
-    public Movimiento(LocalDate fecha, Celular celular, Usuario usuario, String descripcion) {
+    public Movimiento(LocalDate fecha, Celular celular, Usuario usuario, String descripcion, TipoMovimiento tipo) {
         this.fecha       = fecha;
         this.celular     = celular;
         this.usuario     = usuario;
         this.descripcion = descripcion;
+        this.tipo        = tipo;
     }
 
     public Movimiento(LocalDate fecha, Celular celular, Usuario usuario) {
-        this(fecha, celular, usuario, null);
+        this(fecha, celular, usuario, null, TipoMovimiento.ENTREGA); 
     }
     public void asignarCelular(Celular celular) {
         this.setCelular(celular);
@@ -44,6 +48,14 @@ public class Movimiento {
 
     public void setDescripcion(String descripcion) {
         this.descripcion = descripcion;
+    }
+
+    public TipoMovimiento getTipo() {
+        return tipo;
+    }
+
+    public void setTipo(TipoMovimiento tipo) {
+        this.tipo = tipo;
     }
 
     public Long getId() {
@@ -62,7 +74,7 @@ public class Movimiento {
         return celular;
     }
 
-    private void setCelular(Celular celular) {
+    public void setCelular(Celular celular) {
         this.celular = celular;
     }
 
@@ -70,7 +82,7 @@ public class Movimiento {
         return usuario;
     }
 
-    private void setUsuario(Usuario usuario) {
+    public void setUsuario(Usuario usuario) {
         this.usuario = usuario;
     }
 }
